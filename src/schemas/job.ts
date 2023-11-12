@@ -39,7 +39,6 @@ export default defineType({
         },
         prepare(selection) {
             const {company} = selection;
-            console.log(selection)
             return { ...selection, subtitle: company && `at ${company}` }
           },
     },

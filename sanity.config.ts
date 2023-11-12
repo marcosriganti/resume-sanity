@@ -11,6 +11,7 @@ import {
   IframeOptions,
 } from 'sanity-plugin-iframe-pane'
 import { previewUrl } from 'sanity-plugin-iframe-pane/preview-url'
+import { iconPicker } from 'sanity-plugin-icon-picker';
 
 // see https://www.sanity.io/docs/api-versioning for how versioning works
 import {
@@ -39,6 +40,7 @@ export default defineConfig({
   //edit schemas in './src/schemas'
   schema,
   plugins: [
+    iconPicker(),
     deskTool({
       // `defaultDocumentNode` is responsible for adding a “Preview” tab to the document pane
       // You can add any React component to `S.view.component` and it will be rendered in the pane
@@ -54,12 +56,12 @@ export default defineConfig({
         ])
       },
     }),
-    // Add the "Open preview" action
-    previewUrl({
-      base: '/api/draft',
-      requiresSlug: ['post'],
-      urlSecretId: previewSecretId,
-    }),
+    // // Add the "Open preview" action
+    // previewUrl({
+    //   base: '/api/draft',
+    //   requiresSlug: ['post'],
+    //   urlSecretId: previewSecretId,
+    // }),
     // Vision lets you query your content with GROQ in the studio
     // https://www.sanity.io/docs/the-vision-plugin
     visionTool({ defaultApiVersion: apiVersion }),

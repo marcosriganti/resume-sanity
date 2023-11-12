@@ -39,6 +39,11 @@ export default defineType({
     preview: {
         select: {
             title: 'name',
+            job: 'job.name',
         },
+        prepare(selection) {
+            const {job} = selection;
+            return { ...selection, subtitle: job && `as ${job}` }
+          },
     },
 });
