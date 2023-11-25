@@ -1,13 +1,22 @@
 import {PortableText} from '@portabletext/react';
 import type {GetStaticProps, InferGetStaticPropsType} from 'next';
-import Image from 'next/image';
 import Head from 'next/head';
+import Image from 'next/image';
 
 import Container from '~/components/Container';
 import {readToken} from '~/lib/sanity.api';
 import {getClient} from '~/lib/sanity.client';
 import {urlForImage} from '~/lib/sanity.image';
-import {getJobs, getProfile, getProjects, type Job, type Profile, type Project, getSoftSkills, type SoftSkill} from '~/lib/sanity.queries';
+import {
+  getJobs, 
+  getProfile,
+  getProjects,
+  getSoftSkills,
+  type Job,
+  type Profile,
+  type Project,
+  type SoftSkill
+} from '~/lib/sanity.queries';
 import type {SharedPageProps} from '~/pages/_app';
 import {formatDate} from '~/utils';
 
@@ -49,7 +58,6 @@ export const getStaticProps: GetStaticProps<
     jobs: Job[];
     projects: Project[];
     softSkills: SoftSkill[];
-
   }
 > = async ({draftMode = false}) => {
   const client = getClient(draftMode ? {token: readToken} : undefined);
@@ -74,7 +82,6 @@ export default function IndexPage(
   props: InferGetStaticPropsType<typeof getStaticProps>,
 ) {
   const {profile, jobs, projects, softSkills} = props;
-
   return (
     <>
       <Head>
@@ -145,7 +152,7 @@ export default function IndexPage(
                   </div>
                 </div>
                 <div className='job__header__right'>
-                  <img src={urlForImage(job.logo)} width={100} alt={job.company} />
+                  <img src={urlForImage(job.logo).url()} width={100} alt={job.company} />
                 </div>
 
               </div>
@@ -164,7 +171,7 @@ export default function IndexPage(
                       <h3>{project.name} <span className='highlight'>@{project.company}</span></h3>
                     </div>
                     <div className='project_image'>
-                      <img src={urlForImage(project.mainImage)} height={40} alt={project.name} />
+                      <img src={urlForImage(project.mainImage).url()} height={40} alt={project.name} />
                     </div>
                   </div>
                   <div className='body-content'>

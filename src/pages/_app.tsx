@@ -1,40 +1,40 @@
-import '~/styles/global.css'
+import '~/styles/global.css';
 
-import type { AppProps } from 'next/app'
-import { IBM_Plex_Mono,  PT_Serif, Titillium_Web, Bitter } from 'next/font/google'
-import { lazy } from 'react'
+import type {AppProps} from 'next/app';
+import {Bitter, IBM_Plex_Mono, PT_Serif} from 'next/font/google';
+import {lazy} from 'react';
 
 export interface SharedPageProps {
-  draftMode: boolean
-  token: string
+  draftMode: boolean;
+  token: string;
 }
 
-const PreviewProvider = lazy(() => import('~/components/PreviewProvider'))
+const PreviewProvider = lazy(() => import('~/components/PreviewProvider'));
 
 const mono = IBM_Plex_Mono({
   variable: '--font-family-mono',
   subsets: ['latin'],
   weight: ['500', '700'],
-})
+});
 
 const sans = Bitter({
   variable: '--font-family-sans',
   subsets: ['latin'],
-  weight: [ '400', '700'],
-})
+  weight: ['400', '700'],
+});
 
 const serif = PT_Serif({
   variable: '--font-family-serif',
   style: ['normal', 'italic'],
   subsets: ['latin'],
   weight: ['400', '700'],
-})
+});
 
 export default function App({
   Component,
   pageProps,
 }: AppProps<SharedPageProps>) {
-  const { draftMode, token } = pageProps
+  const {draftMode, token} = pageProps;
   return (
     <>
       <style jsx global>
@@ -54,5 +54,5 @@ export default function App({
         <Component {...pageProps} />
       )}
     </>
-  )
+  );
 }
