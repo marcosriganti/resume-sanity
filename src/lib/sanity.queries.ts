@@ -11,8 +11,8 @@ export async function getPosts(client: SanityClient): Promise<Post[]> {
 
 export const postBySlugQuery = groq`*[_type == "post" && slug.current == $slug][0]`
 export const profileBySlugQuery = groq`*[_type == "profile" && slug.current == $slug][0]`;
-export const jobsQuery = groq`*[_type == "job"] {_id, name, startedAt, body,'company': company->name } | order(startedAt desc)`;
-export const projectsQuery = groq`*[_type == "project"]`;
+export const jobsQuery = groq`*[_type == "job"] {_id, name, startedAt, body,'company': company->name, 'logo':  company->mainImage } | order(startedAt desc)`;
+export const projectsQuery = groq`*[_type == "project"] {_id, name, body, 'job': job->name, 'company': job->company->name,'skills': skill[]->{_id, name}, ...}`;
 export async function getPost(
   client: SanityClient,
   slug: string,
@@ -98,6 +98,7 @@ export interface Job {
   startedAt: string,
   endedAt: string,
   company: string,
+  skills: Skill[],
   body: PortableTextBlock[]
   
 }

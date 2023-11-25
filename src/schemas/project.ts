@@ -33,7 +33,7 @@ export default defineType({
             name: 'skill',
             title: 'Skills',
             type: 'array',
-            of: [{type: 'reference', to: {type: 'skill'}}],
+            of: [{type: 'reference', to: [{type: 'skill'}]}],
         }),
     ],
     preview: {
