@@ -11,7 +11,8 @@ export async function getPosts(client: SanityClient): Promise<Post[]> {
 
 export const postBySlugQuery = groq`*[_type == "post" && slug.current == $slug][0]`
 export const profileBySlugQuery = groq`*[_type == "profile" && slug.current == $slug][0]`;
-export const jobsQuery = groq`*[_type == "job"] | order(startedAt desc)`;
+export const jobsQuery = groq`*[_type == "job"] {_id, name, startedAt, body,'company': company->name } | order(startedAt desc)`;
+export const projectsQuery = groq`*[_type == "project"]`;
 export async function getPost(
   client: SanityClient,
   slug: string,
@@ -30,9 +31,16 @@ export async function getProfile(
 }
 export async function getJobs (
   client: SanityClient,
-): Promise<Job> {
+): Promise<Job[]> {
   return await client.fetch(jobsQuery)
 }
+
+export async function getProjects (
+  client: SanityClient,
+): Promise<Project[]> {
+  return await client.fetch(projectsQuery)
+}
+
 export const postSlugsQuery = groq`
 *[_type == "post" && defined(slug.current)][].slug.current
 `
@@ -41,6 +49,33 @@ export interface Company {
   _id: string,
   name: string,
   mainImage: ImageAsset
+}
+export interface Skill { 
+  _type: 'skill',
+  _id: string,
+  name: string,
+}
+
+export interface SoftSkill { 
+  _type: 'softSkill',
+  _id: string,
+  name: string,
+  description: string,
+}
+export interface Hooby {
+  _type: 'hooby',
+  _id: string,
+  name: string,
+  icon: string,
+}
+export interface Project {
+  _type: 'project',
+  _id: string,
+  name: string,
+  job: Job,
+  mainImage: ImageAsset,
+  body: PortableTextBlock[],
+  skills: Skill[]
 }
 export interface Profile { 
   _type: 'profile',
@@ -62,7 +97,7 @@ export interface Job {
   name: string,
   startedAt: string,
   endedAt: string,
-  company: Company,
+  company: string,
   body: PortableTextBlock[]
   
 }
@@ -78,4 +113,3 @@ export interface Post {
   body: PortableTextBlock[]
 }
 
-//write interaces for the schemas in the studio folder

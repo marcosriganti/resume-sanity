@@ -58,7 +58,11 @@ export default defineType({
             title: 'GitHub',
             type: 'string',
         }),
-       
+        defineField({
+            name: 'calendly',
+            title: 'Calendly',
+            type: 'string',
+        }),
         defineField({
             name: 'excerpt',
             title: 'About Me',
