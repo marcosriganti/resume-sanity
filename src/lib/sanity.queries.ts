@@ -95,7 +95,8 @@ export interface Profile {
   linkedin: string,
   github: string,
   position: string,
-  mainImage: ImageAsset
+  mainImage: ImageAsset,
+  body: PortableTextBlock[],
 }
 export interface Job { 
   _type: 'job',
