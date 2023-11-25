@@ -13,6 +13,7 @@ export const postBySlugQuery = groq`*[_type == "post" && slug.current == $slug][
 export const profileBySlugQuery = groq`*[_type == "profile" && slug.current == $slug][0]`;
 export const jobsQuery = groq`*[_type == "job"] {_id, name, startedAt, body,'company': company->name, 'logo':  company->mainImage } | order(startedAt desc)`;
 export const projectsQuery = groq`*[_type == "project"] {_id, name, body, 'job': job->name, 'company': job->company->name,'skills': skill[]->{_id, name}, ...}`;
+export const softSkillsQuery = groq`*[_type == "softSkill"] {_id, name, description}`;
 export async function getPost(
   client: SanityClient,
   slug: string,
@@ -40,7 +41,11 @@ export async function getProjects (
 ): Promise<Project[]> {
   return await client.fetch(projectsQuery)
 }
-
+export async function getSoftSkills (
+  client: SanityClient,
+): Promise<SoftSkill[]> {
+  return await client.fetch(softSkillsQuery)
+}
 export const postSlugsQuery = groq`
 *[_type == "post" && defined(slug.current)][].slug.current
 `
@@ -73,6 +78,7 @@ export interface Project {
   _id: string,
   name: string,
   job: Job,
+  company: Company,
   mainImage: ImageAsset,
   body: PortableTextBlock[],
   skills: Skill[]

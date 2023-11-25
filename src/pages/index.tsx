@@ -6,14 +6,14 @@ import Container from '~/components/Container';
 import {readToken} from '~/lib/sanity.api';
 import {getClient} from '~/lib/sanity.client';
 import {urlForImage} from '~/lib/sanity.image';
-import {getJobs, getProfile, getProjects, type Job, type Profile, type Project} from '~/lib/sanity.queries';
+import {getJobs, getProfile, getProjects, type Job, type Profile, type Project, getSoftSkills, type SoftSkill} from '~/lib/sanity.queries';
 import type {SharedPageProps} from '~/pages/_app';
 import {formatDate} from '~/utils';
 
 const socialNetworks = [
   {
-    name: 'GitHub',
-    key: 'github',
+    name: 'Email',
+    key: 'email',
   },
   {
     name: 'LinkedIn',
@@ -23,11 +23,11 @@ const socialNetworks = [
     name: 'Calendly',
     key: 'calendly',
   },
-  {
-    name: 'Email',
-    key: 'email',
-  },
 
+  {
+    name: 'GitHub',
+    key: 'github',
+  },
 
 ];
 
@@ -47,19 +47,23 @@ export const getStaticProps: GetStaticProps<
     profile: Profile;
     jobs: Job[];
     projects: Project[];
+    softSkills: SoftSkill[];
+
   }
 > = async ({draftMode = false}) => {
   const client = getClient(draftMode ? {token: readToken} : undefined);
   const profile = await getProfile(client, process.env.SANITY_PROFILE_SLUG);
   const jobs = await getJobs(client);
   const projects = await getProjects(client);
+  const softSkills = await getSoftSkills(client);
+
   return {
     props: {
       draftMode,
       token: draftMode ? readToken : '',
       profile,
       jobs,
-      // softSkills,
+      softSkills,
       projects,
     },
   };
@@ -68,7 +72,7 @@ export const getStaticProps: GetStaticProps<
 export default function IndexPage(
   props: InferGetStaticPropsType<typeof getStaticProps>,
 ) {
-  const {profile, jobs, projects, } = props;
+  const {profile, jobs, projects, softSkills} = props;
 
   return (
     <div className='page'>
@@ -83,9 +87,9 @@ export default function IndexPage(
               </div>
             </div>
             <div className='description'>
-              <h1><span className='highlight'>Hi</span> there! I'm <span className='highlight'> {profile.name.split(' ')[0]}</span></h1>
+              <h1><span className='highlight'>Hi</span> there! I&apos;m <span className='highlight'> {profile.name.split(' ')[0]}</span></h1>
               <h2>Full Stack / Front End <span className='highlight'>Web Developer</span></h2>
-              <p><a href="#contact">Let&apos;s get in touch</a>  - <a href="">Download CV</a> </p>
+              <p><strong><a href="#contact" className='highlight'>Let&apos;s get in touch</a></strong>  or  <a href="">Download CV</a> </p>
             </div>
 
           </div>
@@ -102,11 +106,11 @@ export default function IndexPage(
               {profile.excerpt}
             </p>
           </div>
-          {/* <div>
-          <span>&lt;/&gt;</span>
-        </div> */}
-          <h2><span className='highlight'>&lt;Work</span>Experience/&gt;</h2>
 
+          <h2><span className='highlight'>&lt;Work</span>Experience/&gt;</h2>
+          <div className='content'>
+            <p>Throughout my career, I&apos;ve had the opportunity to work in various capacities, ranging from full-time to part-time roles. The following is a curated selection of companies I&apos;ve been fortunate to be a part of over the years.</p>
+          </div>
           {jobs.map((job) => (
             <div className='job' key={job._id}>
               <div className='job-started'>
@@ -135,7 +139,9 @@ export default function IndexPage(
           )}
 
           <h2>&lt;Clients<span className='highlight'>Projects/&gt;</span> </h2>
-
+          <div className='content'>
+            <p>Enumerating all the clients and projects I&apos;ve had the privilege to be a part of would be an exhaustive task. Grateful for the opportunities; this is a small list of them:</p>
+          </div>
           {projects.length > 0 && <div className='projects'>
             {projects.map((project) => (
               <div className='project' key={project._id}>
@@ -159,6 +165,22 @@ export default function IndexPage(
           </div>
           }
           <h2>&lt;Soft<span className='highlight'>Skills/&gt;</span> </h2>
+
+          {softSkills.length > 0 && <div className='soft-skills'>
+            {softSkills.map((skill) => (
+              <div className='soft-skill' key={skill._id}>
+                <div className='soft-skill__header'>
+                  <div className='soft-skill__header__left'>
+                    <h3>{skill.name} </h3>
+                  </div>
+                </div>
+                <div className='body-content'>
+                  <p>{skill.description}</p>
+                </div>
+              </div>
+            )
+            )}
+          </div>}
         </Container>
       </main>
 
