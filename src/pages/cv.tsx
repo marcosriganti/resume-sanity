@@ -1,12 +1,9 @@
+import {PortableText} from '@portabletext/react';
 import type {GetStaticProps, InferGetStaticPropsType} from 'next';
 import Head from 'next/head';
 import Image from 'next/image';
-
-import AboutMe from '~/components/AboutMe';
-import Container from '~/components/Container';
-import Jobs from '~/components/Jobs';
-import Projects from '~/components/Projects';
 import SoftSkills from '~/components/SoftSkills';
+import Container from '~/components/Container';
 import {readToken} from '~/lib/sanity.api';
 import {getClient} from '~/lib/sanity.client';
 import {urlForImage} from '~/lib/sanity.image';
@@ -21,6 +18,9 @@ import {
   type SoftSkill
 } from '~/lib/sanity.queries';
 import type {SharedPageProps} from '~/pages/_app';
+import Projects from '~/components/Projects';
+import Jobs from '~/components/Jobs';
+import AboutMe from '~/components/AboutMe';
 const socialNetworks = [
   {
     name: 'Email',
@@ -41,6 +41,17 @@ const socialNetworks = [
   },
 
 ];
+
+const components = {
+  types: {
+    code: props => (
+      <pre data-language={props.node.language}>
+        <code>{props.node.code}</code>
+      </pre>
+    )
+  }
+};
+
 
 export const getStaticProps: GetStaticProps<
   SharedPageProps & {
@@ -68,7 +79,7 @@ export const getStaticProps: GetStaticProps<
   };
 };
 
-export default function IndexPage(
+export default function CvPage(
   props: InferGetStaticPropsType<typeof getStaticProps>,
 ) {
   const {profile, jobs, projects, softSkills} = props;
