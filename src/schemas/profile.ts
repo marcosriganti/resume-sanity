@@ -34,6 +34,26 @@ export default defineType({
             type: 'string',
         }),
         defineField({
+            name: 'dob',
+            title: 'Date of Birth',
+            type: 'datetime',
+        }),
+        defineField({
+            name: 'civilStatus',
+            title: 'Marital Status',
+            type: 'string',
+        }),
+        defineField({
+            name: 'language',
+            title: 'Language',
+            type: 'string',
+        }),
+        defineField({
+            name: 'citizenship',
+            title: 'Citizenship',
+            type: 'string',
+        }),
+        defineField({
             name: 'phone',
             title: 'Phone Number',
             type: 'string',

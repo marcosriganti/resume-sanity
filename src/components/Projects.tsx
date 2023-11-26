@@ -29,10 +29,10 @@ const Projects: FC<ProjectProps> = ({data}) => {
                         </div>
                         <div className='body-content'>
                             <PortableText value={project.body} />
-                            <div className="badges">
+                        </div>
+                        <div className="badges">
                                 {project.skills.map((skill) => (<div className='badge' key={skill._id}>{skill.name}</div>))}
                             </div>
-                        </div>
                     </div>
                 )
                 )}

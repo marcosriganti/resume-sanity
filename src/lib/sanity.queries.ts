@@ -5,23 +5,13 @@ import { type SanityClient } from 'next-sanity'
 
 export const postsQuery = groq`*[_type == "post" && defined(slug.current)] | order(_createdAt desc)`
 
-export async function getPosts(client: SanityClient): Promise<Post[]> {
-  return await client.fetch(postsQuery)
-}
 
 export const postBySlugQuery = groq`*[_type == "post" && slug.current == $slug][0]`
 export const profileBySlugQuery = groq`*[_type == "profile" && slug.current == $slug][0]`;
 export const jobsQuery = groq`*[_type == "job"] {_id, name, startedAt, body,'company': company->name, 'logo':  company->mainImage } | order(startedAt desc)`;
 export const projectsQuery = groq`*[_type == "project"] {_id, name, body, mainImage, 'job': job->name, 'company': job->company->name,'skills': skill[]->{_id, name}, ...}`;
 export const softSkillsQuery = groq`*[_type == "softSkill"] {_id, name, description}`;
-export async function getPost(
-  client: SanityClient,
-  slug: string,
-): Promise<Post> {
-  return await client.fetch(postBySlugQuery, {
-    slug,
-  })
-}
+
 export async function getProfile(
   client: SanityClient,
   slug: string,
@@ -97,6 +87,9 @@ export interface Profile {
   position: string,
   mainImage: ImageAsset,
   body: PortableTextBlock[],
+  dob: string,
+  language: string,
+  citizenship: string,
 }
 export interface Job { 
   _type: 'job',
@@ -108,16 +101,5 @@ export interface Job {
   skills: Skill[],
   body: PortableTextBlock[]
   logo: ImageAsset
-}
-
-export interface Post {
-  _type: 'post'
-  _id: string
-  _createdAt: string
-  title?: string
-  slug: Slug
-  excerpt?: string
-  mainImage?: ImageAsset
-  body: PortableTextBlock[]
 }
 

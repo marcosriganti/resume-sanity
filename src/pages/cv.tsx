@@ -1,9 +1,11 @@
-import {PortableText} from '@portabletext/react';
 import type {GetStaticProps, InferGetStaticPropsType} from 'next';
 import Head from 'next/head';
 import Image from 'next/image';
-import SoftSkills from '~/components/SoftSkills';
+
 import Container from '~/components/Container';
+import Jobs from '~/components/Jobs';
+import Projects from '~/components/Projects';
+import SoftSkills from '~/components/SoftSkills';
 import {readToken} from '~/lib/sanity.api';
 import {getClient} from '~/lib/sanity.client';
 import {urlForImage} from '~/lib/sanity.image';
@@ -18,10 +20,34 @@ import {
   type SoftSkill
 } from '~/lib/sanity.queries';
 import type {SharedPageProps} from '~/pages/_app';
-import Projects from '~/components/Projects';
-import Jobs from '~/components/Jobs';
-import AboutMe from '~/components/AboutMe';
+
+const personalDetails = [
+  {
+    name: 'Location',
+    key: 'location',
+  },
+  {
+    name: 'Date of Birth',
+    key: 'dob',
+  },
+  {
+    name: 'Marital status',
+    key: 'civilStatus',
+  },
+  {
+    name: 'Citizenships',
+    key: 'citizenship',
+  },
+  {
+    name: 'Spoken Languages',
+    key: 'language',
+  },
+];
 const socialNetworks = [
+  {
+    name: 'Phone',
+    key: 'phone',
+  },
   {
     name: 'Email',
     key: 'email',
@@ -41,16 +67,6 @@ const socialNetworks = [
   },
 
 ];
-
-const components = {
-  types: {
-    code: props => (
-      <pre data-language={props.node.language}>
-        <code>{props.node.code}</code>
-      </pre>
-    )
-  }
-};
 
 
 export const getStaticProps: GetStaticProps<
@@ -87,59 +103,53 @@ export default function CvPage(
     <>
       <Head>
         <title>
-        {profile.name} - CV Resume 
-        </title>
+        {profile.name} - CV Resume</title>
         <meta
           name="description"
           content={profile.excerpt} 
           key="desc"
         />
       </Head>
-      <div className='page'>
-        <header>
+      <div className='page print'>
+
+        <main>
           <Container>
-            <div className='header'>
-              <div className='avatar'>
-                <div className='image-wrapper'>
+            <div className="sidebar">
+            <div className='image-wrapper'>
                   <Image src={urlForImage(profile.mainImage).width(250).height(250).url()} className='user-img' height={250}
                     width={250} alt={profile.name} />
                 </div>
-              </div>
-              <div className='description'>
-                <h1><span className='highlight'>Hi</span> there! I&apos;m <span className='highlight'> {profile.name.split(' ')[0]}</span></h1>
-                <h2>Full Stack / Front End <span className='highlight'>Web Developer</span></h2>
-                <h3><strong><a href="#contact" className='highlight'>Let&apos;s get in touch</a></strong>  or  <a href="/cv" className='highlight'>Download the CV</a> </h3>
-              </div>
+              <h1>{ profile.name }</h1>
+              <h2>{profile.position}</h2>
+              <br/>
+              <h2>Personal Details</h2>
+              <dl>
+                {personalDetails.map((network) => (
+                  <div key={network.key}>
+                    <dt>{network.name}</dt>
+                    <dd>{profile[network.key]}</dd>
+                  </div>
+                )) }
+              </dl>
+              <h2>Contact Details</h2>
+              <dl>
+                {socialNetworks.map((network) => (
+                  <div key={network.key}>
+                    <dt>{network.name}</dt>
+                    <dd>{profile[network.key].replace('mailto:','')}</dd>
+                  </div>
+                )) }
+              </dl>
             </div>
-          </Container>
-        </header>
-        <main>
-          <Container>
-            <AboutMe data={profile} />  
+            <div className="main-content">
             <Jobs data={jobs} />  
-            <Projects data={projects} />
+              <div className='print-page'>
+              <Projects data={projects.slice(0,9)} />
             <SoftSkills data={ softSkills} />
+            </div>
+            </div>
           </Container>
         </main>
-
-        <footer className='footer' id='contact'>
-          <Container>
-            <div>
-              <h2>Let&apos;s have a Conversation and Explore how far We can go</h2>
-              <p>
-                If you are looking for a developer who can help you build your next project, or you are looking for a mentor to help you get started with web development, or you just want to say hi, feel free to reach out to me.
-              </p>
-              <div className='list-inline'>
-                {socialNetworks.map((network) => (
-                  <a key={network.key} href={profile[network.key]} className='button'>
-                    <h3>{network.name}</h3>
-                  </a>
-                ))
-                }
-              </div>
-            </div>
-          </Container>
-        </footer>
       </div></>
   );
 }

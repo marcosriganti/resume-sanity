@@ -12,7 +12,7 @@ interface ProjectProps {
 
 const Jobs: FC<ProjectProps> = ({data}) => {
     return (
-        <>
+        <div className='jobs'>
         <h2><span className='highlight'>&lt;Work</span>Experience/&gt;</h2>
             <div className='content'>
               <p>Throughout my career, I&apos;ve had the opportunity to work in various capacities, ranging from full-time to part-time roles. The following is a curated selection of companies I&apos;ve been fortunate to be a part of over the years.</p>
@@ -44,7 +44,7 @@ const Jobs: FC<ProjectProps> = ({data}) => {
             )
             )}
 
-        </>
+        </div>
     );
 };
 
