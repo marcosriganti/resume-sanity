@@ -427,8 +427,14 @@ main h2 {
 .print .project__header {
   margin-bottom: 0;
 }
-
+.no-print {
+  font-weight: bold;
+  font-size: 1rem;
+}
 @media print {
+  .no-print {
+    display: none;
+  }
     html, body {
       height: 99%;    
   }

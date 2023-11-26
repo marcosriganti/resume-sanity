@@ -1,6 +1,7 @@
 import type {GetStaticProps, InferGetStaticPropsType} from 'next';
 import Head from 'next/head';
 import Image from 'next/image';
+import Link from 'next/link';
 
 import Container from '~/components/Container';
 import Jobs from '~/components/Jobs';
@@ -20,7 +21,6 @@ import {
   type SoftSkill
 } from '~/lib/sanity.queries';
 import type {SharedPageProps} from '~/pages/_app';
-
 const personalDetails = [
   {
     name: 'Location',
@@ -116,11 +116,13 @@ export default function CvPage(
           <Container>
             <div className="sidebar">
             <div className='image-wrapper'>
-                  <Image src={urlForImage(profile.mainImage).width(250).height(250).url()} className='user-img' height={250}
-                    width={250} alt={profile.name} />
+            <Link href="/" ><Image src={urlForImage(profile.mainImage).width(250).height(250).url()} className='user-img' height={250}
+                  width={250} alt={profile.name} />
+                  </Link>
                 </div>
               <h1>{ profile.name }</h1>
               <h2>{profile.position}</h2>
+              <a className='no-print' href="javascript:window.print();">Click here to Download</a>
               <br/>
               <h2>Personal Details</h2>
               <dl>

@@ -10,6 +10,7 @@ import SoftSkills from '~/components/SoftSkills';
 import {readToken} from '~/lib/sanity.api';
 import {getClient} from '~/lib/sanity.client';
 import {urlForImage} from '~/lib/sanity.image';
+import Link from 'next/link';
 import {
   getJobs, 
   getProfile,
@@ -97,7 +98,7 @@ export default function IndexPage(
               <div className='description'>
                 <h1><span className='highlight'>Hi</span> there! I&apos;m <span className='highlight'> {profile.name.split(' ')[0]}</span></h1>
                 <h2>Full Stack / Front End <span className='highlight'>Web Developer</span></h2>
-                <h3><strong><a href="#contact" className='highlight'>Let&apos;s get in touch</a></strong>  or  <a href="/cv" className='highlight'>Download the CV</a> </h3>
+                <h3><strong><a href="#contact" className='highlight'>Let&apos;s get in touch</a></strong>  or  <Link href="/cv" className='highlight'>Download the CV</Link> </h3>
               </div>
             </div>
           </Container>
