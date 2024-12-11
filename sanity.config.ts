@@ -44,7 +44,7 @@ export default defineConfig({
   plugins: [
     iconPicker(),
     googleMapsInput({
-      apiKey: process.env.GOOGLE_MAPS_KEYS ||
+      apiKey: process.env.GOOGLE_MAPS_KEYS || ''
     }),
     deskTool({
       // `defaultDocumentNode` is responsible for adding a “Preview” tab to the document pane
