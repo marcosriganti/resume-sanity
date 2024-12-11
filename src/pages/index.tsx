@@ -1,6 +1,7 @@
 import type {GetStaticProps, InferGetStaticPropsType} from 'next';
 import Head from 'next/head';
 import Image from 'next/image';
+import Link from 'next/link';
 
 import AboutMe from '~/components/AboutMe';
 import Container from '~/components/Container';
@@ -10,9 +11,8 @@ import SoftSkills from '~/components/SoftSkills';
 import {readToken} from '~/lib/sanity.api';
 import {getClient} from '~/lib/sanity.client';
 import {urlForImage} from '~/lib/sanity.image';
-import Link from 'next/link';
 import {
-  getJobs, 
+  getJobs,
   getProfile,
   getProjects,
   getSoftSkills,
@@ -77,11 +77,11 @@ export default function IndexPage(
     <>
       <Head>
         <title>
-        {profile.name} - CV Resume 
+          {profile.name} - CV Resume
         </title>
         <meta
           name="description"
-          content={profile.excerpt} 
+          content={profile.excerpt}
           key="desc"
         />
       </Head>
@@ -105,10 +105,10 @@ export default function IndexPage(
         </header>
         <main>
           <Container>
-            <AboutMe data={profile} />  
-            <Jobs data={jobs} />  
+            <AboutMe data={profile} />
+            <Jobs data={jobs} />
             <Projects data={projects} />
-            <SoftSkills data={ softSkills} />
+            <SoftSkills data={softSkills} />
           </Container>
         </main>
 

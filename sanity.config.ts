@@ -2,16 +2,18 @@
  * This config is used to set up Sanity Studio that's mounted on the `/pages/studio/[[...index]].tsx` route
  */
 
-import { visionTool } from '@sanity/vision'
-import { defineConfig } from 'sanity'
-import { deskTool } from 'sanity/desk'
+import {visionTool} from '@sanity/vision';
+import {defineConfig} from 'sanity';
+import {deskTool} from 'sanity/desk';
 import {
   defineUrlResolver,
   Iframe,
   IframeOptions,
-} from 'sanity-plugin-iframe-pane'
-import { previewUrl } from 'sanity-plugin-iframe-pane/preview-url'
-import { iconPicker } from 'sanity-plugin-icon-picker';
+} from 'sanity-plugin-iframe-pane';
+import {previewUrl} from 'sanity-plugin-iframe-pane/preview-url';
+import {googleMapsInput} from "@sanity/google-maps-input";
+
+import {iconPicker} from 'sanity-plugin-icon-picker';
 
 // see https://www.sanity.io/docs/api-versioning for how versioning works
 import {
@@ -19,8 +21,8 @@ import {
   dataset,
   previewSecretId,
   projectId,
-} from '~/lib/sanity.api'
-import { schema } from '~/schemas'
+} from '~/lib/sanity.api';
+import {schema} from '~/schemas';
 
 const iframeOptions = {
   url: defineUrlResolver({
@@ -28,8 +30,8 @@ const iframeOptions = {
     requiresSlug: ['post'],
   }),
   urlSecretId: previewSecretId,
-  reload: { button: true },
-} satisfies IframeOptions
+  reload: {button: true},
+} satisfies IframeOptions;
 
 export default defineConfig({
   basePath: '/studio',
@@ -41,19 +43,22 @@ export default defineConfig({
   schema,
   plugins: [
     iconPicker(),
+    googleMapsInput({
+      apiKey: "AIzaSyDfohtolrbN18o9AZHGoc71exBdpxvw9Z4"
+    }),
     deskTool({
       // `defaultDocumentNode` is responsible for adding a “Preview” tab to the document pane
       // You can add any React component to `S.view.component` and it will be rendered in the pane
       // and have access to content in the form in real-time.
       // It's part of the Studio's “Structure Builder API” and is documented here:
       // https://www.sanity.io/docs/structure-builder-reference
-      defaultDocumentNode: (S, { schemaType }) => {
+      defaultDocumentNode: (S, {schemaType}) => {
         return S.document().views([
           // Default form view
           S.view.form(),
           // Preview
           S.view.component(Iframe).options(iframeOptions).title('Preview'),
-        ])
+        ]);
       },
     }),
     // // Add the "Open preview" action
@@ -64,6 +69,6 @@ export default defineConfig({
     // }),
     // Vision lets you query your content with GROQ in the studio
     // https://www.sanity.io/docs/the-vision-plugin
-    visionTool({ defaultApiVersion: apiVersion }),
+    visionTool({defaultApiVersion: apiVersion}),
   ],
-})
+});

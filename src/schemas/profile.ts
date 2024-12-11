@@ -69,6 +69,11 @@ export default defineType({
             type: 'string',
         }),
         defineField({
+            title: 'Launchpad Location',
+            name: 'locationMap',
+            type: 'geopoint'
+        }),
+        defineField({
             name: 'linkedin',
             title: 'LinkedIn',
             type: 'string',
@@ -87,7 +92,6 @@ export default defineType({
             name: 'excerpt',
             title: 'About Me',
             type: 'text',
-            rows: 4,
         }),
         defineField({
             name: 'body',

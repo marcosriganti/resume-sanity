@@ -55,7 +55,7 @@
 }
 
 html {
-  background-color:rgb(246, 245, 248);
+  background-color: rgb(246, 245, 248);
   font-family: var(--font-family-sans), var(--font-family-serif), sans-serif;
   -webkit-text-size-adjust: 100%;
   -moz-text-size-adjust: 100%;
@@ -113,6 +113,7 @@ header .header {
   color: transparent;
   transition: all 0.2s ease-in-out;
 }
+
 a.highlight:hover {
   background-image: linear-gradient(to top, #7028e4 20%, #e5b2ca 100%);
 }
@@ -132,11 +133,12 @@ main {
   padding: 2rem 0;
   border-radius: 50px 50px 0 0;
 }
+
 main h2 {
   margin-top: 3rem;
 }
-.page {
-}
+
+.page {}
 
 .container {
   max-width: 1400px;
@@ -222,7 +224,7 @@ main h2 {
 }
 
 .job-started p {
-  margin: 1rem 0 0;  
+  margin: 1rem 0 0;
 }
 
 .job__header__right {
@@ -233,17 +235,20 @@ main h2 {
 /*  Projects */
 .projects {
   display: grid;
-  grid-template-columns:  1fr;
+  grid-template-columns: 1fr;
   gap: 1rem;
 }
+
 @media (min-width: 768px) {
   .job {
     display: flex;
     gap: 2rem;
   }
+
   .projects {
     grid-template-columns: 1fr 1fr 1fr;
   }
+
   .job-started p {
     background-image: linear-gradient(to top, #7028e4 0%, #e5b2ca 100%);
     color: var(--white);
@@ -253,6 +258,7 @@ main h2 {
     line-height: 100px;
     text-align: center
   }
+
   .job__header__right {
     display: flex;
   }
@@ -301,7 +307,7 @@ main h2 {
   font-size: 0.8rem;
 }
 
-.project .body-content p{
+.project .body-content p {
   font-size: 0.8rem;
   margin: 0;
 }
@@ -313,11 +319,13 @@ main h2 {
     font-size: 14px;
   }
 }
+
 @media (min-width: 768px) {
   header .header {
     flex-direction: row;
     gap: 3rem;
   }
+
   h1 {
     font-size: 4rem;
   }
@@ -325,60 +333,74 @@ main h2 {
   .list-inline {
     flex-direction: row;
   }
+
   .image-wrapper {
     width: 250px;
     height: 250px;
   }
+
   .content p {
     font-size: 1.2rem;
   }
 }
+
 /* CV - Print Version */
 .print .image-wrapper {
   width: 150px;
   height: 150px;
 }
-.print .sidebar h1{
+
+.print .sidebar h1 {
   font-size: 2rem;
   margin: 0.5rem 0;
 }
-.print .sidebar h2{
+
+.print .sidebar h2 {
   font-size: 1rem;
   margin: 0.5rem 0;
 }
+
 .sidebar dl {
-    display: grid;
-    grid-template-columns: 1fr;
-    gap: 0.5rem;
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 0.5rem;
 }
+
 .sidebar dl dt {
   font-weight: bold;
   font-size: 0.875rem;
 }
+
 .sidebar dl dd {
   margin: 5px 0;
   padding: 0;
   font-size: 0.8rem;
 }
-.print main{
+
+.print main {
   background-color: #fff
 }
+
 @media (min-width: 768px) {
   .sidebar {
     width: 33%;
   }
+
   .main-content {
     width: 66%;
   }
-  .print > main > .container {
+
+  .print>main>.container {
     flex-direction: row;
     gap: 1rem;
   }
+
   .print .job-started p {
-     background: none;
-     color: #000;
-     width: 50px;
-     line-height: 1rem;;
+    background: none;
+    color: #000;
+    width: 50px;
+    line-height: 1rem;
+    ;
   }
 }
 
@@ -390,17 +412,21 @@ main h2 {
   -webkit-background-clip: unset;
   color: #000;
 }
+
 .print .job-started p {
   font-size: 0.8rem;
 }
+
 .print .main-content h3 {
   margin: 0.5rem 0;
   font-size: 0.8rem;
 }
+
 .print .main-content h2 {
   font-size: 1.5rem;
   margin-top: 1rem;
 }
+
 .print .content p {
   font-size: 0.8rem;
 }
@@ -409,65 +435,82 @@ main h2 {
   font-size: 0.75rem;
   margin-bottom: 0.25rem;
 }
+
 .print .project {
   padding: 0;
 }
+
 .print .projects {
-  grid-template-columns: 1fr 1fr;
+  grid-template-columns: 1fr;
   gap: 0.5rem;
   grid-gap: 0.5rem;
 }
-.print .project .body-content{
+
+/* .print .project .body-content{
   display: -webkit-box;
   -webkit-line-clamp: 3;
   -webkit-box-orient: vertical;
   overflow: hidden;
   text-overflow: ellipsis;
-}
+} */
 .print .project__header {
   margin-bottom: 0;
 }
+
 .no-print {
   font-weight: bold;
   font-size: 1rem;
 }
+
 @media print {
   .no-print {
     display: none;
   }
-    html, body {
-      height: 99%;    
+
+  html,
+  body {
+    height: 99%;
   }
+
   .project_image {
     display: none;
   }
+
   .sidebar {
     width: 33%;
   }
+
   .main-content {
     width: 66%;
   }
-  .print > main > .container {
+
+  .print>main>.container {
     flex-direction: row;
     gap: 1rem;
   }
-  .print .main-content h2{
+
+  .print .main-content h2 {
     font-size: 1rem;
   }
+
   .badges {
     margin-top: 0;
   }
+
   .content {
     display: none
   }
-  .job{
+
+  .job {
     border: 0;
   }
+
   .jobs {
     height: 99vh;
   }
+
   .print-page {
     height: 99vh;
-    overflow: hidden
+    /* overflow: hidden */
   }
 }

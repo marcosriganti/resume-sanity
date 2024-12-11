@@ -21,7 +21,7 @@ const Projects: FC<ProjectProps> = ({data}) => {
                     <div className='project' key={project._id}>
                         <div className='project__header'>
                             <div className='project__header__left'>
-                                <h3>{project.name} <span className='highlight'>@{project.company}</span></h3>
+                                <h3>{project.name} {project?.company && <span className='highlight'>@{project.company}</span>}</h3>
                             </div>
                             <div className='project_image'>
                                 <img src={urlForImage(project.mainImage).url()} height={40} alt={project.name} />
@@ -31,8 +31,8 @@ const Projects: FC<ProjectProps> = ({data}) => {
                             <PortableText value={project.body} />
                         </div>
                         <div className="badges">
-                                {project.skills.map((skill) => (<div className='badge' key={skill._id}>{skill.name}</div>))}
-                            </div>
+                            {project.skills.map((skill) => (<div className='badge' key={skill._id}>{skill.name}</div>))}
+                        </div>
                     </div>
                 )
                 )}

@@ -11,7 +11,7 @@ import {readToken} from '~/lib/sanity.api';
 import {getClient} from '~/lib/sanity.client';
 import {urlForImage} from '~/lib/sanity.image';
 import {
-  getJobs, 
+  getJobs,
   getProfile,
   getProjects,
   getSoftSkills,
@@ -103,10 +103,10 @@ export default function CvPage(
     <>
       <Head>
         <title>
-        {profile.name} - CV Resume</title>
+          {profile.name} - CV Resume</title>
         <meta
           name="description"
-          content={profile.excerpt} 
+          content={profile.excerpt}
           key="desc"
         />
       </Head>
@@ -115,40 +115,43 @@ export default function CvPage(
         <main>
           <Container>
             <div className="sidebar">
-            <div className='image-wrapper'>
-            <Link href="/" ><Image src={urlForImage(profile.mainImage).width(250).height(250).url()} className='user-img' height={250}
+              <div className='image-wrapper'>
+                <Link href="/" ><Image src={urlForImage(profile.mainImage).width(250).height(250).url()} className='user-img' height={250}
                   width={250} alt={profile.name} />
-                  </Link>
-                </div>
-              <h1>{ profile.name }</h1>
+                </Link>
+              </div>
+              <h1>{profile.name}</h1>
               <h2>{profile.position}</h2>
               <a className='no-print' href="javascript:window.print();">Click here to Download</a>
-              <br/>
+              <br />
               <h2>Personal Details</h2>
               <dl>
-                {personalDetails.map((network) => (
-                  <div key={network.key}>
-                    <dt>{network.name}</dt>
-                    <dd>{profile[network.key]}</dd>
-                  </div>
-                )) }
+                {personalDetails.map((network) => {
+                  const v = network.key === 'dob' ? new Date(profile[network.key]).toLocaleDateString("en-US") : profile[network.key];
+                  return (
+                    <div key={network.key}>
+                      <dt>{network.name}</dt>
+                      <dd>{v}</dd>
+                    </div>
+                  );
+                })}
               </dl>
               <h2>Contact Details</h2>
               <dl>
                 {socialNetworks.map((network) => (
                   <div key={network.key}>
                     <dt>{network.name}</dt>
-                    <dd>{profile[network.key].replace('mailto:','')}</dd>
+                    <dd>{profile[network.key].replace('mailto:', '')}</dd>
                   </div>
-                )) }
+                ))}
               </dl>
             </div>
             <div className="main-content">
-            <Jobs data={jobs} />  
+              <Jobs data={jobs} />
               <div className='print-page'>
-              <Projects data={projects.slice(0,9)} />
-            <SoftSkills data={ softSkills} />
-            </div>
+                <Projects data={projects} />
+                <SoftSkills data={softSkills} />
+              </div>
             </div>
           </Container>
         </main>
