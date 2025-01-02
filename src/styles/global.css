@@ -318,6 +318,10 @@ main h2 {
     background-color: #fff;
     font-size: 14px;
   }
+
+  .job__header__right {
+    display: none
+  }
 }
 
 @media (min-width: 768px) {

@@ -1,14 +1,14 @@
-import type { PortableTextBlock } from '@portabletext/types'
-import type { ImageAsset, Slug } from '@sanity/types'
-import groq from 'groq'
-import { type SanityClient } from 'next-sanity'
+import type {PortableTextBlock} from '@portabletext/types';
+import type {ImageAsset, Slug} from '@sanity/types';
+import groq from 'groq';
+import {type SanityClient} from 'next-sanity';
 
-export const postsQuery = groq`*[_type == "post" && defined(slug.current)] | order(_createdAt desc)`
+export const postsQuery = groq`*[_type == "post" && defined(slug.current)] | order(_createdAt desc)`;
 
 
-export const postBySlugQuery = groq`*[_type == "post" && slug.current == $slug][0]`
+export const postBySlugQuery = groq`*[_type == "post" && slug.current == $slug][0]`;
 export const profileBySlugQuery = groq`*[_type == "profile" && slug.current == $slug][0]`;
-export const jobsQuery = groq`*[_type == "job"] {_id, name, startedAt, body,'company': company->name, 'logo':  company->mainImage } | order(startedAt desc)`;
+export const jobsQuery = groq`*[_type == "job"] {_id, name, startedAt,endedAt, body,'company': company->name, 'logo':  company->mainImage } | order(startedAt desc)`;
 export const projectsQuery = groq`*[_type == "project"] {_id, name, body, mainImage, 'job': job->name, 'company': job->company->name,'skills': skill[]->{_id, name}, ...}`;
 export const softSkillsQuery = groq`*[_type == "softSkill"] {_id, name, description}`;
 
@@ -18,40 +18,40 @@ export async function getProfile(
 ): Promise<Profile> {
   return await client.fetch(profileBySlugQuery, {
     slug,
-  })
+  });
 }
-export async function getJobs (
+export async function getJobs(
   client: SanityClient,
 ): Promise<Job[]> {
-  return await client.fetch(jobsQuery)
+  return await client.fetch(jobsQuery);
 }
 
-export async function getProjects (
+export async function getProjects(
   client: SanityClient,
 ): Promise<Project[]> {
-  return await client.fetch(projectsQuery)
+  return await client.fetch(projectsQuery);
 }
-export async function getSoftSkills (
+export async function getSoftSkills(
   client: SanityClient,
 ): Promise<SoftSkill[]> {
-  return await client.fetch(softSkillsQuery)
+  return await client.fetch(softSkillsQuery);
 }
 export const postSlugsQuery = groq`
 *[_type == "post" && defined(slug.current)][].slug.current
-`
-export interface Company { 
+`;
+export interface Company {
   _type: 'company',
   _id: string,
   name: string,
-  mainImage: ImageAsset
+  mainImage: ImageAsset;
 }
-export interface Skill { 
+export interface Skill {
   _type: 'skill',
   _id: string,
   name: string,
 }
 
-export interface SoftSkill { 
+export interface SoftSkill {
   _type: 'softSkill',
   _id: string,
   name: string,
@@ -71,15 +71,15 @@ export interface Project {
   company: string,
   mainImage: ImageAsset,
   body: PortableTextBlock[],
-  skills: Skill[]
+  skills: Skill[];
 }
-export interface Profile { 
+export interface Profile {
   _type: 'profile',
   _id: string,
   name: string,
   excerpt: string,
   location: string,
-  email: string, 
+  email: string,
   phone: string,
   slug: Slug,
   linkedin: string,
@@ -91,7 +91,7 @@ export interface Profile {
   language: string,
   citizenship: string,
 }
-export interface Job { 
+export interface Job {
   _type: 'job',
   _id: string,
   name: string,
@@ -99,7 +99,7 @@ export interface Job {
   endedAt: string,
   company: string,
   skills: Skill[],
-  body: PortableTextBlock[]
-  logo: ImageAsset
+  body: PortableTextBlock[];
+  logo: ImageAsset;
 }
 
